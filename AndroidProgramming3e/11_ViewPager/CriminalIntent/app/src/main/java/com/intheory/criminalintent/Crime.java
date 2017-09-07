@@ -1,22 +1,28 @@
-package com.bignerdranch.android.criminalintent;
+package com.intheory.criminalintent;
 
 import java.util.Date;
 import java.util.UUID;
 
-public class Crime {
 
+
+public class Crime {
     private UUID mId;
     private String mTitle;
     private Date mDate;
     private boolean mSolved;
+    private boolean mRequiresPolice;
 
-    public Crime() {
+    public Crime(){
         mId = UUID.randomUUID();
         mDate = new Date();
     }
 
     public UUID getId() {
         return mId;
+    }
+
+    public void setID(UUID Id) {
+        mId = Id;
     }
 
     public String getTitle() {
@@ -41,5 +47,13 @@ public class Crime {
 
     public void setSolved(boolean solved) {
         mSolved = solved;
+    }
+
+    public boolean isRequiresPolice() {
+        return mRequiresPolice;
+    }
+
+    public void setRequiresPolice(boolean requiresPolice) {
+        mRequiresPolice = requiresPolice;
     }
 }
