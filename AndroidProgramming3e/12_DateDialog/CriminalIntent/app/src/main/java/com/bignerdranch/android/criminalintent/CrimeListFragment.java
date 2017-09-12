@@ -56,6 +56,7 @@ public class CrimeListFragment extends Fragment {
 
         private TextView mTitleTextView;
         private TextView mDateTextView;
+        private TextView mTimeTextView;
         private ImageView mSolvedImageView;
 
         public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
@@ -70,8 +71,10 @@ public class CrimeListFragment extends Fragment {
         public void bind(Crime crime) {
             mCrime = crime;
             mTitleTextView.setText(mCrime.getTitle());
-            mDateTextView.setText(mCrime.getDate().toString());
-            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE : View.GONE);
+            //mDateTextView.setText(mCrime.getDate().toString());
+            android.text.format.DateFormat df = new android.text.format.DateFormat();
+            mDateTextView.setText(df.format("EEEE, MMM dd, yyyy", mCrime.getDate()).toString() + " " + df.format("hh:mm:ss a", mCrime.getTime()).toString());
+            mSolvedImageView.setVisibility(crime.isSolved() ? View.VISIBLE: View.GONE);
         }
 
         @Override

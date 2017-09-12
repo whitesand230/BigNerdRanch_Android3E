@@ -1,4 +1,4 @@
-package com.bignerdranch.android.criminalintent;
+package com.intheory.criminalintent;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.bignerdranch.android.criminalintent", appContext.getPackageName());
+        assertEquals("com.intheory.criminalintent", appContext.getPackageName());
     }
 }
