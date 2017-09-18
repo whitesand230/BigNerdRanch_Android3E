@@ -1,5 +1,6 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,10 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
+import java.util.UUID;
 
 public class CrimeListFragment extends Fragment {
 
     private static final String SAVED_SUBTITLE_VISIBLE = "subtitle";
+    private static final int REQUEST_CRIME = 0;
 
     private RecyclerView mCrimeRecyclerView;
     private CrimeAdapter mAdapter;
@@ -62,6 +65,24 @@ public class CrimeListFragment extends Fragment {
     }
 
     @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode != Activity.RESULT_OK){
+            return;
+        }
+        if(requestCode == REQUEST_CRIME){
+            if(data == null){
+                return;
+            }
+
+            UUID crimeId = (UUID) data.getSerializableExtra(CrimePagerActivity.EXTRA_CRIME_ID);
+            CrimeLab crimeLab = CrimeLab.get(getActivity());
+            //Crime crime = crimeLab.getCrime(crimeId);
+            crimeLab.removeCrime(crimeId);
+
+        }
+    }
+
+    @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_crime_list, menu);
@@ -97,8 +118,9 @@ public class CrimeListFragment extends Fragment {
     private void updateSubtitle() {
         CrimeLab crimeLab = CrimeLab.get(getActivity());
         int crimeCount = crimeLab.getCrimes().size();
-        String subtitle = getString(R.string.subtitle_format, crimeCount);
+        //String subtitle = getString(R.string.subtitle_format, crimeCount);
 
+        String subtitle = getResources().getQuantityString(R.plurals.subtitle_plural, crimeCount, crimeCount);
         if (!mSubtitleVisible) {
             subtitle = null;
         }
@@ -149,7 +171,8 @@ public class CrimeListFragment extends Fragment {
         @Override
         public void onClick(View view) {
             Intent intent = CrimePagerActivity.newIntent(getActivity(), mCrime.getId());
-            startActivity(intent);
+            //startActivity(intent);
+            startActivityForResult(intent, REQUEST_CRIME);
         }
     }
 

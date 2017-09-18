@@ -1,5 +1,6 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,13 +9,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
 
-public class CrimePagerActivity extends AppCompatActivity {
+public class CrimePagerActivity extends AppCompatActivity implements CrimeFragment.OnDeleteCrimeListener {
 
-    private static final String EXTRA_CRIME_ID =
+    public static final String EXTRA_CRIME_ID =
             "com.bignerdranch.android.criminalintent.crime_id";
 
     private ViewPager mViewPager;
@@ -24,6 +29,14 @@ public class CrimePagerActivity extends AppCompatActivity {
         Intent intent = new Intent(packageContext, CrimePagerActivity.class);
         intent.putExtra(EXTRA_CRIME_ID, crimeId);
         return intent;
+    }
+
+    @Override
+    public void onCrimeIdSelected(UUID crimeId) {
+        Intent intent = new Intent();
+        intent.putExtra(EXTRA_CRIME_ID, crimeId);
+        setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     @Override
@@ -58,5 +71,10 @@ public class CrimePagerActivity extends AppCompatActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 }
